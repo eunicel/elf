@@ -18,7 +18,7 @@ def get_redirected_url(url):
 url_data = mysql.connector.connect(host='localhost',
         user='root',
         password='',
-        db='urls') # The name of the database we are using is ekgdata.
+        db='urls') # The name of the database we are using is urls
 
 cursor = url_data.cursor()
 
