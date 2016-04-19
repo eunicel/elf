@@ -12,7 +12,7 @@ def get_redirected_url(url):
 
 starttime = datetime.datetime.now()
 for word in wordlist:
-	word = word[0:len(word)] # strips off newline at the end
+	word = word[0:len(word)-1] # strips off newline at the end
 	original_url = "http://shoutkey.com/" + word
 	redirected_url = get_redirected_url(original_url)
 	num_redirected = 0
