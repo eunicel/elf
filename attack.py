@@ -41,7 +41,7 @@ for word in wordlist:
 	word = word[0:len(word)-1] # strips off newline at the end
 	original_url = "http://shoutkey.com/" + word
 	redirected_url = get_redirected_url(original_url)
-	if redirected_url == original_url:
+	if redirected_url == original_url or redirected_url == "http://shoutkey.com/":
 		# did not redirect
 		print word, " did not redirect"
 		cursor.execute(insert_stmt, (word, None, datetime.datetime.now()))
