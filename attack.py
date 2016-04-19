@@ -29,7 +29,7 @@ cursor = url_data.cursor()
 
 create_stmt = ( 
         'CREATE TABLE IF NOT EXISTS urls'
-        ' (WORD CHAR(30), REDIRECT_URL CHAR(100), TIMESTAMP CHAR(30))'
+        ' (WORD CHAR(30), REDIRECT_URL CHAR(500), TIMESTAMP CHAR(30))'
 )
 cursor.execute(create_stmt)
 insert_stmt = 'INSERT IGNORE INTO urls (WORD, REDIRECT_URL, TIMESTAMP) VALUES (%s, %s, %s)'
