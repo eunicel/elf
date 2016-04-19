@@ -11,8 +11,8 @@ def get_redirected_url(url):
     	opener = urllib2.build_opener(urllib2.HTTPRedirectHandler)
     	request = opener.open(url)
     	return request.url
-    except urllib2.HTTPError, e:
-	print e
+    except:
+	print "ERROR OCCURRED"
 
 # set up a database to store the redirect urls
 url_data = mysql.connector.connect(host='localhost',
