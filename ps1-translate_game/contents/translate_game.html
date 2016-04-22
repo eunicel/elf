@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+   COLLABORATORS: none
+   I used the following site to help with highlighting sections of the jquery autocomplete suggestions:
+     http://stackoverflow.com/questions/9887032/how-to-highlight-input-words-in-autocomplete-jquery-ui
+  -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ready, Set, Translate !</title>
+    <link type="text/css" href="jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link type="text/css" href="translate_game.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="jquery/js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script type="text/javascript" src="dicts.json"></script>
+    <script type="text/javascript" src="translate_game.js"></script>
+
+  </head>
+  <body>
+    <h1> Translate from <span class="from" style="color:black"></span> to <span class="to" style="color:black"></span></h1>
+
+    <table style="width:100%" id="table">
+      <tr style="font-size:20px;font-weight:bold;">
+        <td><span class="from"></span></td>
+        <td><span class="to"></span></td>
+        <td>Answer</td>
+      </tr>
+      <tr>
+        <td id="promptWord">espejo</td>
+        <td><input type="text" id="userInput"></td>
+        <td><button type="button" id="seeAnswer">See Answer</button></td>
+      </tr>
+      <tr class="correct example">
+        <td>calabaza</td>
+        <td class="guess">pumpkin</td>
+        <td><span class="ui-icon ui-icon-check"></span></td>
+      </tr>
+      <tr class="incorrect example">
+        <td>postmodernidad</td>
+        <td class="guess">phone</td>
+        <td>postmodernism</td>
+      </tr>
+    </table>
+  </body>
+</html>
