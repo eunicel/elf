@@ -6,7 +6,7 @@ $(function() {
 
   var attempts = 0;
   var limited = false;
-  var exponential = false;
+  var delay = false;
   var redirects = {};
 
   var init = function() {
@@ -20,9 +20,9 @@ $(function() {
     } else if (page === "twokey") {
       twokey = true;
       redirects = {"birddog" : "./secret.html"};
-    } else if (page === "password" || page === "limited" || page === "exponential") {
+    } else if (page === "password" || page === "limited" || page === "delay") {
       limited = page === "limited";
-      exponential = page === "exponential";
+      delay = page === "delay";
       redirects = {"apple" : {"password": dog, "redirect": "./secret.html"}};
     } else {
       console.log("page " + page);
@@ -42,6 +42,7 @@ $(function() {
     if (twokey) {
       input += document.getElementById("key2").value;
     }
+
     var redirect = redirects[input];
     if (redirect !== undefined) {
       window.location.replace(redirect);
