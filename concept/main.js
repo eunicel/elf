@@ -25,7 +25,7 @@ $(function() {
       exponential = page === "exponential";
       redirects = {"apple" : {"password": dog, "redirect": "./secret.html"}};
     } else {
-      console.log("unknown page " + page);
+      console.log("page " + page);
     }
 
     displayDict();
@@ -37,7 +37,7 @@ $(function() {
     });
   }
 
-  $("#attempt").click(function() {
+  var checkAttempt = function() {
     var input = document.getElementById("key").value;
     if (twokey) {
       input += document.getElementById("key2").value;
@@ -48,6 +48,16 @@ $(function() {
     } else {
       $("#sorry").show();
     }
+  }
+
+  $('input').keydown(function(e) {
+    if (e.keyCode == 13) {
+      checkAttempt();
+    }
+  });
+
+  $("#attempt").click(function() {
+    checkAttempt();
   });
 
   $(document).on("click", "#input_key", function(){
