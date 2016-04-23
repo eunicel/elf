@@ -24,6 +24,7 @@ app.directive("whisperKey", function() {
     }
   };
 
+
   return {
     controller: whisperKeyController,
     controllerAs: "controller", // this is how the controller will be referenced in the directive

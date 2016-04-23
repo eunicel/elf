@@ -1,18 +1,33 @@
 <!doctype html>
-<html ng-app="whisperKeyApp">
+<html>
 <head>
-  <title> WhisperKey DH </title>
+  <title> WhisperKey Concept </title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css">
   <link rel="stylesheet" href="./layout.css">
-  <script type="text/javascript" src="./app.js"></script>
+  <script type="text/javascript" src="./main.js"></script>
 </head>
 <body>
 
-  <whisper-key class="main-content"></whisper-key>
+  <div id="mainPage">
+  Choose a concept:
+  <br>
+
+  <span id="asdf"></span>
+  <button class="ui button" ng-click="controller.goTo('shoutkey')"><a href="./shoutkey.html">Go!</button> The Original Shoutkey</a>
+  <br>
+  <button class="ui button" ng-click="controller.goTo('twokeys')">Go!</button> Using Two Keys
+  <br>
+  <button class="ui button" ng-click="controller.goTo('password')">Go!</button> Requiring a Password
+  <br>
+  <button class="ui button" ng-click="controller.goTo('password_limited')">Go!</button> Limited Password Guesses
+  <br>
+  <button class="ui button" ng-click="controller.goTo('exponential_delay')">Go!</button> Exponential Delay in Passwords
+
+  </div>
 
 </body>
 </html>
