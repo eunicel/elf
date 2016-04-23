@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title> Shoutkey </title>
+  <title> Password-Protected (Limited Attempts) Shoutkey </title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
@@ -13,12 +13,14 @@
 <body>
   <div class="ui text container">
     <br><br>
-    <h2 class="ui dividing header"> Shoutkey </h2>
+    <h2 class="ui dividing header"> Password-Protected (Limited Attempts) Shoutkey </h2>
 
     <div class="intro">
-      Shoutkey is a URL shortener based off of dictionary words. For example a shoutkey with key "blue" that redirects to "google.com" means that you can access google by going to "shoutkey.com/blue"
+      One way to make Shoutkey more secure is to require a password, increasing the time of a dictionary attack from O(n) to O(n^2) for dictionary of size n!
       <br>
-      Shoutkey uses only dictionary words to provide a memorable and easy for the user to share and access URLs, but this also makes it susceptible to dictionary attacks. Try to find the hidden link using the dictionary in the concept below!
+      In addition, we can limit the number of password attempts. This decreases the probability of finding a password for a given key from 1 to (max_attempts)/n.
+      <br>
+      Try to find the hidden link for the Password-Protected Shoutkey using the dictionary in the concept below! You only get <span class="max_attempts"></span> tries!
     </div>
 
     <br>
@@ -30,7 +32,7 @@
         <button class="ui button" id="attempt">Go</button>
 
         <div id="sorry">
-          Sorry, try a different key/password combination!
+          Sorry, incorrect password
         </div>
       </div>
 
@@ -54,7 +56,7 @@
           <div> <span id="remaining"></span> guesses remaining </div>
         </div>
         <div id="error" style="display:none">
-          You have unsuccessfully guessed <span id="max_attempts"> </span> times to guess the password for the <span id="guess_key"></span> key.
+          You have unsuccessfully guessed <span class="max_attempts"> </span> times to guess the password for the <span id="guess_key"></span> key.
           <br>
           You are locked out from guessing any more for this key.
           <br>
