@@ -1,3 +1,8 @@
 .page {
   display:none;
 }
+
+#sorry {
+  display:none;
+  color:red;
+}
