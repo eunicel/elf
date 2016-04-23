@@ -48,8 +48,18 @@
         Enter the Password
       </div>
       <div class="content">
-        <div class="ui input" id="input_password"><input type="text" placeholder="e.g. apple" id="password" autofocus></div>
-        <button class="ui button" id="attempt_password">Go</button>
+        <div id="ok">
+          <div class="ui input" id="input_password"><input type="text" placeholder="e.g. apple" id="password" autofocus></div>
+          <button class="ui button" id="attempt_password">Go</button>
+          <div> <span id="remaining"></span> guesses remaining </div>
+        </div>
+        <div id="error" style="display:none">
+          You have unsuccessfully guessed <span id="max_attempts"> </span> times to guess the password for the <span id="guess_key"></span> key.
+          <br>
+          You are locked out from guessing any more for this key.
+          <br>
+          <button class="ui button" id="close_password"> OK </button>
+        </div>
       </div>
     </div>
 

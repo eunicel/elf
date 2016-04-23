@@ -4,10 +4,13 @@ $(function() {
   var twokey = false;
   var password = false;
 
-  var attempts = 0;
+  var attempts = {};
+  var max_attempts = 3;
   var limited = false;
   var delay = false;
   var redirects = {};
+
+  $('.ui.accordion').accordion();
 
   var init = function() {
     var current = window.location.href;
@@ -21,10 +24,10 @@ $(function() {
       twokey = true;
       redirects = {"catdog" : "./secret.html"};
     } else if (page === "password" || page === "limited" || page === "delay") {
-      password = page === "password";
+      password = true;
       limited = page === "limited";
       delay = page === "delay";
-      redirects = {"birddog" : "./secret.html"};
+      redirects = {"catdog" : "./secret.html"};
       //redirects = {"apple" : {"password": "dog", "redirect": "./secret.html"}};
     } else {
       console.log("page " + page);
@@ -40,12 +43,24 @@ $(function() {
   }
 
   var checkAttempt = function() {
+    var input = document.getElementById("key").value;
     if (password) {
+      if (attempts[input] === undefined) {
+        attempts[input] = 0;
+      }
       $("#password_prompt").show();
+
+      var remaining = max_attempts-attempts[input];
+      $("#remaining").html(remaining);
+      if (remaining == 0) {
+        $("#ok").hide();
+        $("#error").show();
+        $("#max_attempts").html(max_attempts);
+        $("#guess_key").html(input);
+      }
       return
     }
 
-    var input = document.getElementById("key").value;
     if (twokey) {
       input += document.getElementById("key2").value;
     }
@@ -59,9 +74,17 @@ $(function() {
   }
 
   var checkPassword = function() {
-    var input = document.getElementById("key").value + document.getElementById("password").value;
+    var input = document.getElementById("key").value
+    attempts[input]++;
+
+    input += document.getElementById("password").value;
 
     $("#password_prompt").hide();
+
+    console.log(attempts[input] + "  " + max_attempts);
+    if (attempts[input] === max_attempts) {
+      $("#sorry").html("You have reached the maximum number of password attempts for this key");
+    }
 
     var redirect = redirects[input];
     if (redirect !== undefined) {
@@ -69,6 +92,7 @@ $(function() {
     } else {
       $("#sorry").show();
     }
+
   }
 
   $('input').keydown(function(e) {
@@ -90,10 +114,17 @@ $(function() {
     checkPassword();
   });
 
+  $("#close_password").click(function() {
+    $("#password_prompt").hide();
+    $("#ok").show();
+    $("#error").hide();
+  });
 
 
   $(document).on("click", "#input_key", function(){
-    $("#sorry").hide();
+    if (attempts < max_attempts) {
+      $("#sorry").hide();
+    }
   });
 
 
