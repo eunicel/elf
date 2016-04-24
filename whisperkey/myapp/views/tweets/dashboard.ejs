@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+  <body>
+    <!-- Log Out -->
+    <form class="logout" name="logout" action="/users/logout" method="post">
+      <input type="submit" name="logout" value="Log Out">
+    </form>
+
+    <!-- Header -->
+    <div id="main" class="container">
+      <h1>Welcome, <%= session.name %>!</h1>
+
+      <!-- Compose a new freet... --> 
+      <form action="/tweets/compose" method="get">
+      	<input name="tweet" class="btn" type="submit" value="Compose a new Freet...">
+      </form>
+
+      <!-- Contains all the freets --> 
+      <% for (var i = 0; i < tweets.length; i++){ %>
+
+        <!-- freet -->
+        <div class="freet" style="display:inline-block;">
+          <%= "@"+tweets[i].author %> <%= tweets[i].content %> <br>
+          <% if(tweets[i].author == session.name){ %>
+            <div style="display:inline-block;">
+                
+              <!-- Edit --> 
+              <form action="edit" method="post" style="display:inline-block;">
+                <input class="btn" type="submit" value="Edit" >
+                <input type="hidden" name="posttime" value=<%=tweets[i].posttime%>>
+                <input type="hidden" name="tweetid" value=<%=tweets[i]._id%>>
+                <input type="hidden" name="tweetcontent" value= <%=tweets[i].content%>>
+              </form>
+
+              <!-- Delete --> 
+              <form action="delete" method="post" tweetid=<%=tweets[i]._id%> style="display:inline-block;">
+                <input type="hidden" name="tweetid" value=<%=tweets[i]._id%>>
+                <input class="btn" type="submit" value="Delete">
+              </form>
+            </div>
+          <% } %>
+          
+          <!-- Check if liked --> 
+          <% var liked = false;
+
+          for (var k = 0; k < tweets[i].like.length; k++){
+            if(session.name ==tweets[i].like[k]){
+              liked= true; break;
+            }
+          } %>
+          <!-- Like -->
+          <% if(!liked){ %>
+            <form action="Like" method="post" style="display:inline-block;">
+              <input class="btn" type="submit" value="Like">
+              <input type="hidden" name="tweetid" value=<%=tweets[i]._id%>>
+              <input type="hidden" name="tweetcontent" value=<%=tweets[i].content%>>
+              <input type="hidden" name="posttime" value=<%=tweets[i].posttime%>>
+              <input type="hidden" name="author" value=<%=tweets[i].author%>>
+            </form>
+
+           <!-- Unlike --> 
+          <%} else {%>
+            <form action="unlike" method="post" style="display:inline-block;">
+              <input class="btn" type="submit" value="Unlike">
+              <input type="hidden" name="tweetid" value=<%=tweets[i]._id%>>
+              <input type="hidden" name="tweetcontent" value=<%=tweets[i].content%>>
+              <input type="hidden" name="posttime" value=<%=tweets[i].posttime%>>
+              <input type="hidden" name="author" value=<%=tweets[i].author%>>
+            </form>
+          <%}%>
+
+          <!-- Who likes this? -->
+          <% var likes = tweets[i].like.length;
+          if(likes == 1){ %>
+            <%= tweets[i].like[0] %> likes this
+          <% } else if (likes == 2) { %>
+            <%= tweets[i].like[0] %> and <%= tweets[i].like[1] %> like this
+          <% } else if (likes > 2) { %>
+            <%= tweets[i].like[0] %>, <%= tweets[i].like[1] %>, and <%= likes-2%> others like this 
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Users -->
+    <div id="users_container" class="container">
+      <% var followed = false; %>
+      <h3>Who to follow</h3>
+      
+      <!-- Check if followed-->
+      <% for (var i = 0; i < users.length; i++){
+        for (var j = 0; j < following.length; j++){
+          if (users[i].username == following[j].username){
+            followed = true; break;
+          }
+        } 
+          if(!followed) {%>
+            <div class="user" style="display:inline-block;">
+            <%= users[i].firstname + " " + users[i].lastname + " @ " + users[i].username %>
+              <form action="/users/follow" method="post">
+                <input type="hidden" name="followed" value=<%=users[i].username%>>
+                <input type="submit" class="btn" value="Follow" style="display:inline-block;">
+              </form>
+            </div>
+        <% }
+        followed = false;
+      } %>
+    </div>
+  </body>
+</html>
