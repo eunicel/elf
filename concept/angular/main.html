@@ -1,0 +1,19 @@
+
+<div ng-include src="'./shoutkey.html'"></div>
+
+<div id="mainPage">
+Choose a concept:
+<br>
+
+<span id="asdf"></span>
+<button class="ui button" ng-click="controller.goTo('shoutkey')"><a href="./shoutkey.html">Go!</button> The Original Shoutkey
+<br>
+<button class="ui button" ng-click="controller.goTo('twokeys')">Go!</button> Using Two Keys
+<br>
+<button class="ui button" ng-click="controller.goTo('password')">Go!</button> Requiring a Password
+<br>
+<button class="ui button" ng-click="controller.goTo('password_limited')">Go!</button> Limited Password Guesses
+<br>
+<button class="ui button" ng-click="controller.goTo('exponential_delay')">Go!</button> Exponential Delay in Passwords
+
+</div>
