@@ -34,13 +34,13 @@ router.post('/signup', function(req,res){
 		    		req.session.regenerate(function(err){
 			    		req.session.name = username;
 		    			res.location('/tweets/dashboard');
-			    		res.redirect('/tweets/dashboard');	
+			    		res.redirect('/tweets/dashboard');
 		    		});
 		    	}
 			});
 		}
 	});
-	
+
 });
 
 /* GET login page */
@@ -56,9 +56,22 @@ router.post('/login', function(req, res){
 	var user_url = req.body.user_url;
 
 	//console.log(Whisperkey);
-	console.log(User);
+	//console.log(User);
 	//Whisperkey.find({"word":"dog"},function (err, docs){
-	Whisperkey.find(function (err, docs){
+    var whisperkeyData = {
+      "word": "elephant",
+      "url": null,
+    }
+
+    Whisperkey.createWhisperkey(whisperkeyData, function(err){
+      if(err){
+          res.send("There was a problem adding the information to the database.");
+        }
+    });
+
+
+	Whisperkey.find({"word":"elephant"},function (err, docs){
+	//Whisperkey.find(function (err, docs){
 		console.log("looking for something in whisperkey database");
 		if (err) {
 			console.log("An error has occurred");
@@ -72,11 +85,17 @@ router.post('/login', function(req, res){
 			console.log("size of database");
 			if (docs[i] != undefined) {
 				// send url and add redirect link to database
-				Whisperkey.update({word: docs[i]}, {url:user_url}, {upsert: false}, function (err){
+        console.log("~~");
+        console.log(docs[i]);
+        console.log(docs[i]["word"]);
+        console.log(docs[i].word);
+
+				Whisperkey.update({"word": docs[i]["word"]}, {"url":user_url}, {upsert: false}, function (err){
 					if (err) {
 						res.send('ERROR');
+            res.send(err);
 					} else {
-						res.send("https://scripts.mit.edu/www/eunicel/whisperkey/" + docs[i]);
+						res.send("https://scripts.mit.edu/www/eunicel/whisperkey/" + docs[i]["word"]);
 					}
 				});
 			} else {
@@ -97,7 +116,7 @@ router.post('/logout', function(req, res, next) {
         	res.redirect("/");
         }
     });
-    
+
 });
 
 /* FOLLOW */
