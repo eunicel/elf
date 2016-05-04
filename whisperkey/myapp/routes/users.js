@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 
 var mongoose = require('mongoose');
 var User = require('../model/user');
@@ -9,7 +10,26 @@ var Whisperkey = require('../model/whisperkey');
 
 /* GET signup page */
 router.get('/new', function(req, res,next){
-	res.render('users/new', {title: 'Sign up for Fritter!', session: req.session});
+	var url = require('url');
+	console.log("url");
+	console.log(url);
+	var url_parts = url.parse(req.url, true);
+	console.log("url_parts");
+	console.log(url_parts);
+	var query = url_parts.query;
+	Whisperkey.find(query, function(err, doc) {
+		if (err) {
+			res.send("error.. sad :(");
+		} else {
+			console.log("working");
+			console.log(doc);
+			var redirect_url = doc[0].url;
+			console.log("redirect_url");
+			console.log(redirect_url);
+			res.redirect(redirect_url);
+		}
+	});
+	//res.render('users/new', {title: 'Sign up for Fritter!', session: req.session});
 });
 
 /* POST signup page */
@@ -94,7 +114,8 @@ router.post('/login', function(req, res){
 					res.send('ERROR');
             res.send(err);
 				} else {
-					res.send("localhost:8080/whisperkey?=" + docs[i]["word"]);
+					var word = docs[i]["word"];
+					res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + word + " redirects to " + user_url);
 				}
 			});
 		} else {
