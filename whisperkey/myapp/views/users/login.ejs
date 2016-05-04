@@ -3,14 +3,21 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
   </head>
   <body>
-    <div class="container">
-    	<form name="login" action="users/login" method="post">
-  	    <h1>Welcome to Whisperkey!</h1>
-  	    URL:<input name="user_url" type="text"><br>
-  	    <input id="login_submit" type="submit" class="btn" value="Whisper it!">
-  	</form>
+    <div class="main_container">
+      <h1 class="title">WhisperKey</h1>
+      <span class="subtitle">share links with a whisper</span>
+      <div class="container_">
+    	 <form name="login" action="users/login" method="post">
+		 <b style="color:#555555">URL:</b><input name="user_url" class="form-control" type="text"><br>
+  	    <input id="login_submit" type="submit" class="btn btn-primary" value="Whisper it!">
+         </form>
+      </div>
   </div>
 	
   </body>
