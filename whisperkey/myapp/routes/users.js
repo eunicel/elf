@@ -59,7 +59,7 @@ router.post('/login', function(req, res){
 	//console.log(User);
 	//Whisperkey.find({"word":"dog"},function (err, docs){
     var whisperkeyData = {
-      "word": "elephant",
+      "word": "dog",
       "url": null,
     }
 
@@ -70,39 +70,38 @@ router.post('/login', function(req, res){
     });
 
 
-	Whisperkey.find({"word":"elephant"},function (err, docs){
-	//Whisperkey.find(function (err, docs){
-		console.log("looking for something in whisperkey database");
-		if (err) {
-			console.log("An error has occurred");
-			console.log(err);
-			res.send('An error occurred');
-		} else {
-			//console.log(docs);
-			var i = Math.floor(Math.random() * (docs.length));
-			console.log("docs.length=");
-			console.log(docs.length);
-			console.log("size of database");
-			if (docs[i] != undefined) {
+    Whisperkey.find({},function (err, docs){
+	console.log("looking for something in whisperkey database");
+	if (err) {
+		console.log("An error has occurred");
+		console.log(err);
+		res.send('An error occurred');
+	} else {
+		//console.log(docs);
+		var i = Math.floor(Math.random() * (docs.length));
+		console.log("docs.length=");
+		console.log(docs.length);
+		console.log("size of database");
+		if (docs[i] != undefined) {
 				// send url and add redirect link to database
-        console.log("~~");
-        console.log(docs[i]);
-        console.log(docs[i]["word"]);
-        console.log(docs[i].word);
+       			console.log("~~");
+        		console.log(docs[i]);
+        		console.log(docs[i]["word"]);
+      		  	console.log(docs[i].word);
 
-				Whisperkey.update({"word": docs[i]["word"]}, {"url":user_url}, {upsert: false}, function (err){
-					if (err) {
-						res.send('ERROR');
+			Whisperkey.update({"word": docs[i]["word"]}, {"url":user_url}, {upsert: false}, function (err){
+				if (err) {
+					res.send('ERROR');
             res.send(err);
-					} else {
-						res.send("https://scripts.mit.edu/www/eunicel/whisperkey/" + docs[i]["word"]);
-					}
-				});
-			} else {
-				res.send('No documents?');
-			}
+				} else {
+					res.send("localhost:8080/whisperkey?=" + docs[i]["word"]);
+				}
+			});
+		} else {
+			res.send('No documents?');
 		}
-	});
+	}
+    });
 });
 
 /* POST logout */
