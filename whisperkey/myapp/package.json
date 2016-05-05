@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
@@ -19,5 +19,14 @@
     "mongoose":"*",
     "request":"*"
   },
-  "main":"myapp/server.js"
+  "main":"myapp/server.js",
+  "engines": {
+    "node":"0.10.30",
+    "npm":"1.4.21"
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/stomita/heroku-buildpack-phantomjs"
+    }
+  ]
 }
