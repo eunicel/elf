@@ -11,8 +11,8 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type entry_t struct {
@@ -117,14 +117,20 @@ func init() {
 
 func main() {
 	log.Println("start main")
-	rtr := mux.NewRouter()
-	rtr.HandleFunc("/{key:[a-z]+}", get).Methods("GET")
-	rtr.HandleFunc("/{val:[a-z]+}", post).Methods("POST")
-	rtr.HandleFunc("/{key:[a-z]+}/{pass:[a-z]+}", get).Methods("GET")
-	rtr.HandleFunc("/{key:[a-z]+}/{pass:[a-z]+}", post).Methods("POST")
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application.json")
+		w.Write([]byte("{\"hello\": \"world\"}"))
+	})
+	//rtr := mux.NewRouter()
+	//rtr.HandleFunc("/{key:[a-z]+}", get).Methods("GET")
+	//rtr.HandleFunc("/{val:[a-z]+}", post).Methods("POST")
+	//rtr.HandleFunc("/{key:[a-z]+}/{pass:[a-z]+}", get).Methods("GET")
+	//rtr.HandleFunc("/{key:[a-z]+}/{pass:[a-z]+}", post).Methods("POST")
 
-	http.Handle("/", rtr)
+	//http.Handle("/", rtr)
 
 	log.Println("Listening...")
-	http.ListenAndServe(":3000", handlers.CORS()(rtr))
+	handler := cors.Default().Handler(mux)
+	http.ListenAndServe(":3000", handler)
 }
