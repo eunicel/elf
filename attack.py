@@ -2,7 +2,9 @@ import mysql.connector
 import urllib2
 import datetime
 
+# USE THIS FOR REGULAR DICTIONARY ATTACK
 #wl = open('/usr/share/dict/words', 'r')
+# USE THIS FOR SHOUTKEY DICTIONARY ATTACK
 wl = open('/Users/eunice/Dropbox (MIT)/MIT/Year4/Spring/6.857/elf/shoutkey_dictionary.txt', 'r')
 wordlist = wl.readlines()
 wl.close()

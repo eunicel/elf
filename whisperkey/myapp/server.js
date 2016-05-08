@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -19,7 +18,9 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 var mongo = require('mongodb');
 
 var mongoose = require('mongoose');
-mongoose.connect(connection_string);
+//mongoose.connect(connection_string);
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
+
 
 var db = mongoose.connection;
 db.on('error', function(){console.log('connection error'); });
@@ -89,8 +90,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
-var port = process.env.OPENSHIFT_NODEJS_PORT;
-var ip = process.env.OPENSHIFT_NODEJS_IP;
+//var port = process.env.OPENSHIFT_NODEJS_PORT;
+//var ip = process.env.OPENSHIFT_NODEJS_IP;
 
-app.listen(port || 8080, ip);
+//app.listen(port || 8080, ip);
+app.listen(process.env.PORT || 8080);
 module.exports = app;

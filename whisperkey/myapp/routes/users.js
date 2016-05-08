@@ -21,12 +21,16 @@ router.get('/new', function(req, res,next){
 		if (err) {
 			res.send("error.. sad :(");
 		} else {
-			console.log("working");
-			console.log(doc);
-			var redirect_url = doc[0].url;
-			console.log("redirect_url");
-			console.log(redirect_url);
-			res.redirect(redirect_url);
+			if (query.length == 0) {
+				res.render('users/login');
+			} else {
+				console.log("working");
+				console.log(doc);
+				var redirect_url = doc[0].url;
+				console.log("redirect_url");
+				console.log(redirect_url);
+				res.redirect(redirect_url);
+			}
 		}
 	});
 	//res.render('users/new', {title: 'Sign up for Fritter!', session: req.session});
@@ -72,8 +76,9 @@ router.get('/login', function(req, res,next){
 
 /* POST login page */
 router.post('/login', function(req, res){
-	console.log("POSTING TO LOGIN");
-	var user_url = req.body.user_url;
+    console.log("POSTING TO LOGIN");
+    var user_url = req.body.user_url;
+    console.log("HI");
 
 	//console.log(Whisperkey);
 	//console.log(User);
@@ -82,6 +87,7 @@ router.post('/login', function(req, res){
       "word": "dog",
       "url": null,
     }
+    console.log("HELLO?");
 
     Whisperkey.createWhisperkey(whisperkeyData, function(err){
       if(err){
@@ -89,8 +95,8 @@ router.post('/login', function(req, res){
         }
     });
 
-
-    Whisperkey.find({},function (err, docs){
+    console.log("added dog");
+    Whisperkey.find(function (err, docs){
 	console.log("looking for something in whisperkey database");
 	if (err) {
 		console.log("An error has occurred");
@@ -98,6 +104,7 @@ router.post('/login', function(req, res){
 		res.send('An error occurred');
 	} else {
 		//console.log(docs);
+		console.log("picking a random word");
 		var i = Math.floor(Math.random() * (docs.length));
 		console.log("docs.length=");
 		console.log(docs.length);
@@ -123,6 +130,7 @@ router.post('/login', function(req, res){
 		}
 	}
     });
+    console.log("AFTER FIND");
 });
 
 /* POST logout */
