@@ -122,7 +122,8 @@ router.post('/login', function(req, res){
             res.send(err);
 				} else {
 					var word = docs[i]["word"];
-					res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + word + " redirects to " + user_url);
+					//res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + word + " redirects to " + user_url);
+					res.render('users/login', {title: "WhisperKey", word: word, url: user_url});
 				}
 			});
 		} else {

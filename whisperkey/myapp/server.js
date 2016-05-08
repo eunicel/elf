@@ -19,7 +19,7 @@ var mongo = require('mongodb');
 
 var mongoose = require('mongoose');
 //mongoose.connect(connection_string);
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/fritter');
 
 
 var db = mongoose.connection;
