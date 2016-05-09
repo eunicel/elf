@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 		console.log("redirecting to users/login");
 		res.location('users/login');
 		console.log("HELLO");
-		res.render('users/login', {title: 'Login', session: req.session});
+		res.render('users/login', {title: 'Login', word: "", url: "", session: req.session});
 	} else {
 		console.log("redirecting to dashboard");
 		res.render('tweets/dashboard', { title: 'Dashboard', session: req.session });

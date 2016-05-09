@@ -3,9 +3,9 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
   </head>
   <body>
@@ -18,6 +18,11 @@
   	    <input id="login_submit" type="submit" class="btn btn-primary" value="Whisper it!">
          </form>
       </div>
+      <!-- <title><%= title %></title> -->
+      <% if (true) { %>
+
+        <div> Your WhisperKey is <%= word %> and localhost:8080/users/new?word=<%= word%> redirects to <%= url %> </div>
+      <% } %>
   </div>
 	
   </body>

@@ -71,7 +71,7 @@ router.post('/signup', function(req,res){
 router.get('/login', function(req, res,next){
 	console.log("GET LOGIN");
 	res.location('users/login');
-	res.render('users/login', {title: 'Login', session: req.session});
+	res.render('users/login', {title: 'Login', session: req.session, word: '', url: ''});
 });
 
 /* POST login page */
@@ -121,9 +121,9 @@ router.post('/login', function(req, res){
 					res.send('ERROR');
             res.send(err);
 				} else {
-					var word = docs[i]["word"];
-					//res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + word + " redirects to " + user_url);
-					res.render('users/login', {title: "WhisperKey", word: word, url: user_url});
+					var werd = docs[i]["word"];
+					// res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + werd + " redirects to " + user_url);
+					res.render('users/login', {title: "WhisperKey", word: werd, url: user_url});
 				}
 			});
 		} else {
