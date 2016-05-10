@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+	$(function() {
+		$("#form").on("submit", function(e) {
+			console.log("tried to submit form");
+			e.preventDefault();
+			var pw = "<%= password %>";
+			if ($("#password")[0].value == pw) {
+				console.log("yay got fake password");
+				window.location.href = "<%= url %>"
+			}
+		});
+	});
+    </script>
+  </head>
+
+  <body>
+    <div class="main_container">
+        <h1 class="title">WhisperKey</h1>
+        <span class="subtitle">share links with a whisper</span>
+        <div class="container_">
+          <form id="form" name="signup">
+		  <b style="color:#555555">Please enter the password for this WhisperKey: </b><input id="password" class="form-control" name="password"><br> <input class="btn btn-primary" id="signup_submit" type="submit" value="Go!">
+  	  </form>
+        </div>
+      </div>
+  </body>
+
+</html>

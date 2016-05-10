@@ -11,11 +11,7 @@ var Whisperkey = require('../model/whisperkey');
 /* GET signup page */
 router.get('/new', function(req, res,next){
 	var url = require('url');
-	console.log("url");
-	console.log(url);
 	var url_parts = url.parse(req.url, true);
-	console.log("url_parts");
-	console.log(url_parts);
 	var query = url_parts.query;
 	Whisperkey.find(query, function(err, doc) {
 		if (err) {
@@ -24,19 +20,23 @@ router.get('/new', function(req, res,next){
 			if (query.length == 0) {
 				res.render('users/login');
 			} else {
-				console.log("working");
-				console.log(doc);
-				var redirect_url = doc[0].url;
-				console.log("redirect_url");
-				console.log(redirect_url);
-				res.redirect(redirect_url);
+				if (doc.length > 0) {
+					var redirect_url = doc[0].url;
+					var passwerd = doc[0].password;
+					console.log("*********************");
+					console.log(passwerd);
+					console.log(redirect_url);
+					res.render('users/new', {title: "WhisperKey", url: redirect_url, password: passwerd});
+				} else {
+					res.send('No documents');
+				}
 			}
 		}
 	});
-	//res.render('users/new', {title: 'Sign up for Fritter!', session: req.session});
 });
 
 /* POST signup page */
+/*
 router.post('/signup', function(req,res){
 	var username = req.body.username;
 	User.find({"username":username}, function(err, doc){
@@ -66,75 +66,67 @@ router.post('/signup', function(req,res){
 	});
 
 });
+*/
 
 /* GET login page */
-router.get('/login', function(req, res,next){
+router.get('/create', function(req, res,next){
 	console.log("GET LOGIN");
 	res.location('users/login');
 	res.render('users/login', {title: 'Login', session: req.session, word: '', url: ''});
 });
 
 /* POST login page */
-router.post('/login', function(req, res){
+router.post('/create', function(req, res){
     console.log("POSTING TO LOGIN");
     var user_url = req.body.user_url;
-    console.log("HI");
 
-	//console.log(Whisperkey);
-	//console.log(User);
-	//Whisperkey.find({"word":"dog"},function (err, docs){
-    var whisperkeyData = {
-      "word": "dog",
-      "url": null,
-    }
-    console.log("HELLO?");
-
-    Whisperkey.createWhisperkey(whisperkeyData, function(err){
-      if(err){
-          res.send("There was a problem adding the information to the database.");
-        }
-    });
-
-    console.log("added dog");
+    // find a random word
     Whisperkey.find(function (err, docs){
-	console.log("looking for something in whisperkey database");
 	if (err) {
-		console.log("An error has occurred");
 		console.log(err);
 		res.send('An error occurred');
 	} else {
-		//console.log(docs);
 		console.log("picking a random word");
 		var i = Math.floor(Math.random() * (docs.length));
-		console.log("docs.length=");
-		console.log(docs.length);
-		console.log("size of database");
 		if (docs[i] != undefined) {
-				// send url and add redirect link to database
-       			console.log("~~");
-        		console.log(docs[i]);
-        		console.log(docs[i]["word"]);
-      		  	console.log(docs[i].word);
-
-			Whisperkey.update({"word": docs[i]["word"]}, {"url":user_url}, {upsert: false}, function (err){
-				if (err) {
-					res.send('ERROR');
-            res.send(err);
+			var werd = docs[i]["word"];
+			console.log(werd);
+			//find a random word for the password
+			Whisperkey.find(function (err_, results) {
+				if (err_) {
+					res.send("Error getting password");
 				} else {
-					var werd = docs[i]["word"];
-					// res.send("Your whisperkey is " + word + " and " + "localhost:8080/users/new?word=" + werd + " redirects to " + user_url);
-					res.render('users/login', {title: "WhisperKey", word: werd, url: user_url});
+					console.log("picking a random word for password");
+					var j = Math.floor(Math.random() * (results.length));
+					if (results[j] != undefined) {
+						console.log("results");
+						var passwerd = results[j]["word"];
+						console.log("passwerd");
+						console.log(passwerd);
+						Whisperkey.update({"word": docs[i]["word"]}, {"url":user_url, "password":passwerd}, {upsert: false}, function (err__){
+
+							console.log("updating!!!!");
+							if (err__) {
+								console.log(err__);
+								res.send("Error updating");
+							} else {
+								console.log("successful update, rendering");
+								res.render('users/login', {title: "WhisperKey", word: werd, url: user_url, password: passwerd});
+							}
+						});
+					}
 				}
 			});
+
 		} else {
 			res.send('No documents?');
 		}
 	}
     });
-    console.log("AFTER FIND");
 });
 
 /* POST logout */
+/*
 router.post('/logout', function(req, res, next) {
     req.session.name = undefined;
     req.session.destroy(function(err) {
@@ -147,8 +139,10 @@ router.post('/logout', function(req, res, next) {
     });
 
 });
+*/
 
 /* FOLLOW */
+/*
 router.post('/follow', function(req, res){
 	if(req.session.name == undefined){
 		res.redirect('../');
@@ -161,5 +155,6 @@ router.post('/follow', function(req, res){
 		});
 	}
 });
+*/
 
 module.exports = router;

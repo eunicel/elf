@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var whisperkeySchema = mongoose.Schema({
 	word: String,
 	url: String,
+    	password: String,
 });
 
 // create user

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="main_container">
+      <h1 class="title">WhisperKey</h1>
+      <span class="subtitle">share links with a whisper</span>
+      <div class="container_">
+         <% if (word != "") { %>
+
+	 <div class="display_text"> Your WhisperKey is: </div>
+	 <span class="whisperkey"><%= word %></span>
+	 <div class="display_text"> and password is:</div>
+	 <span class="whisperkey"><%= password %></span>
+	 <div class="display_text">
+		 <a href="https://whisperkey.herokuapp.com/whisperkey/go?word=<%= word%>">https://whisperkey.herokuapp.com/whisperkey/go?word=<%= word%></a> goes to <a href="<%= url %>"><%= url %></a>
+ 	</div>
+	 <% } else { %>
+    	    <form name="login" action="whisperkey/create" method="post">
+               <b style="color:#555555">URL:</b><input name="user_url" class="form-control" type="text"><br>
+  	       <input id="login_submit" type="submit" class="btn btn-primary" value="Whisper it!">
+            </form>
+	 <% } %>
+      </div>
+      <div class="small_text">
+	      WhisperKey is a <b>password protected</b> version of <a href="www.shoutkey.com"> ShoutKey</a>. It increases the security of the URLs you share, while maintaining the user-friendliness of sharing the URL.
+      </div>
+  </div>
+	
+  </body>
+</html>

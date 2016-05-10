@@ -3,7 +3,10 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var readline = require('readline');
+var fs = require('fs');
 
+var Whisperkey = require('./model/whisperkey');
 var connection_string = 'localhost/fritter';
 /*
 if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
@@ -19,8 +22,44 @@ var mongo = require('mongodb');
 
 var mongoose = require('mongoose');
 //mongoose.connect(connection_string);
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/fritter');
+console.log("%%%%%%%%%%%%%%%%%%%");
+console.log(process.env);
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fritter');
 
+// import words into database
+/*
+var dictionary = []
+var rl = readline.createInterface({
+    terminal: false,
+    input: fs.createReadStream('./onepercent_dictionary.txt')
+});
+rl.on('line', function(line) {
+	dictionary.push(line);
+});
+rl.on('close', function() {
+	var i = 0;
+	import_words(i)
+	console.log("IMPORTED WORDS");
+});
+var import_words = function(i) {
+        var whisperkeyData = { 
+            "word": dictionary[i],
+            "url": null,
+	    "password": null,
+        }   
+	console.log(dictionary[i]);
+
+        Whisperkey.createWhisperkey(whisperkeyData, function(err){
+            if(err){
+                res.send("There was a problem adding the information to the database.");
+            }   
+	    if (i < dictionary.length-1) {
+	    	i++;
+	    	import_words(i);
+	    }
+        }); 
+}
+*/
 
 var db = mongoose.connection;
 db.on('error', function(){console.log('connection error'); });
@@ -49,6 +88,7 @@ app.use(session({
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var tweets = require('./routes/tweets');
+var whisperkeys = require('./routes/whisperkey');
 
 app.use(function(req,res,next){
     req.db = db;
@@ -57,6 +97,7 @@ app.use(function(req,res,next){
 
 app.use('/tweets', tweets);
 app.use('/users', users);
+app.use('/whisperkey', whisperkeys);
 app.use('/', routes);
 
 // catch 404 and forward to error handler

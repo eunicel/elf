@@ -1,0 +1,16 @@
+red
+blue
+orange
+yellow
+black
+white
+green
+gray
+silver
+gold
+pink
+purple
+turqoise
+teal
+lime
+
