@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fritter');
 var dictionary = []
 var rl = readline.createInterface({
     terminal: false,
-    input: fs.createReadStream('./onepercent_dictionary.txt')
+    input: fs.createReadStream('./shoutkey_dictionary.txt')
 });
 rl.on('line', function(line) {
 	dictionary.push(line);
