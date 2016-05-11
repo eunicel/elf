@@ -24,7 +24,7 @@
  	</div>
 	 <% } else { %>
     	    <form name="login" action="whisperkey/create" method="post">
-               <b style="color:#555555">URL:</b><input name="user_url" class="form-control" type="text"><br>
+               <b style="color:#555555">URL:</b><input type="url" required name="user_url" class="form-control" type="text"><br>
   	       <input id="login_submit" type="submit" class="btn btn-primary" value="Whisper it!">
             </form>
 	 <% } %>
