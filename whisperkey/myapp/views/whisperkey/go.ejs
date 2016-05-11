@@ -8,14 +8,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script>
 	$(function() {
+		var num_attempts = 0;
 		$("#form").on("submit", function(e) {
 			console.log("tried to submit form");
 			e.preventDefault();
+			$("#signup_submit").disabled = true;
 			var pw = "<%= password %>";
-			if ($("#password")[0].value == pw) {
-				console.log("yay got fake password");
-				window.location.href = "<%= url %>"
-			}
+			console.log(num_attempts);
+			setTimeout(function() {
+				if ($("#password")[0].value == pw) {
+					console.log("yay got fake password");
+					window.location.href = "<%= url %>"
+				} else {
+					num_attempts++;
+				}
+				console.log("$$$$$$$$$$$$$");
+				console.log($("#signup_submit"));
+				$("#signup_submit").disabled = false;
+			}, Math.pow(10, num_attempts));
 		});
 	});
     </script>
