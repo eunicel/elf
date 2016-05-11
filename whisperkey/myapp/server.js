@@ -22,12 +22,12 @@ var mongo = require('mongodb');
 
 var mongoose = require('mongoose');
 //mongoose.connect(connection_string);
+//
 console.log("%%%%%%%%%%%%%%%%%%%");
 console.log(process.env);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fritter');
 
 // import words into database
-/*
 var dictionary = []
 var rl = readline.createInterface({
     terminal: false,
@@ -59,7 +59,6 @@ var import_words = function(i) {
 	    }
         }); 
 }
-*/
 
 var db = mongoose.connection;
 db.on('error', function(){console.log('connection error'); });
