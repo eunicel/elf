@@ -28,37 +28,37 @@ console.log(process.env);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fritter');
 
 // import words into database
-var dictionary = []
-var rl = readline.createInterface({
-    terminal: false,
-    input: fs.createReadStream('./shoutkey_dictionary.txt')
-});
-rl.on('line', function(line) {
-	dictionary.push(line);
-});
-rl.on('close', function() {
-	var i = 0;
-	import_words(i)
-	console.log("IMPORTED WORDS");
-});
-var import_words = function(i) {
-        var whisperkeyData = { 
-            "word": dictionary[i],
-            "url": null,
-	    "password": null,
-        }   
-	console.log(dictionary[i]);
+// var dictionary = []
+// var rl = readline.createInterface({
+//     terminal: false,
+//     input: fs.createReadStream('./shoutkey_dictionary.txt')
+// });
+// rl.on('line', function(line) {
+// 	dictionary.push(line);
+// });
+// rl.on('close', function() {
+// 	var i = 0;
+// 	import_words(i)
+// 	console.log("IMPORTED WORDS");
+// });
+// var import_words = function(i) {
+//         var whisperkeyData = { 
+//             "word": dictionary[i],
+//             "url": null,
+// 	    "password": null,
+//         }   
+// 	console.log(dictionary[i]);
 
-        Whisperkey.createWhisperkey(whisperkeyData, function(err){
-            if(err){
-                res.send("There was a problem adding the information to the database.");
-            }   
-	    if (i < dictionary.length-1) {
-	    	i++;
-	    	import_words(i);
-	    }
-        }); 
-}
+//         Whisperkey.createWhisperkey(whisperkeyData, function(err){
+//             if(err){
+//                 res.send("There was a problem adding the information to the database.");
+//             }   
+// 	    if (i < dictionary.length-1) {
+// 	    	i++;
+// 	    	import_words(i);
+// 	    }
+//         }); 
+// }
 
 var db = mongoose.connection;
 db.on('error', function(){console.log('connection error'); });
