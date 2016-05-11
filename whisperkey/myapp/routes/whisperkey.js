@@ -74,7 +74,7 @@ router.post('/signup', function(req,res){
 router.get('/create', function(req, res,next){
 	console.log("GET CREATE");
 	res.location('whisperkey/create');
-	res.render('whisperkey/create', {title: 'Login', session: req.session, word: '', url: ''});
+	res.render('whisperkey/create', {title: 'Whisperkey', session: req.session, word: '', url: ''});
 });
 
 /* POST login page */
